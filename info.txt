@@ -1,0 +1,32 @@
+
+knex migrate:make create_users_and_todos_tables
+
+
+
+knex seed:make 01_users
+knex seed:make 01_todos
+
+knex migrate:rollback    --remove migration of create_users_and_todos_tables
+
+knex migrate:latest      -- run latest migration; create_users_and_todos_tables
+knex seed:run
+
+
+
+
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex('table_name').del()
+    .then(function () {
+      // Inserts seed entries
+      return knex('table_name').insert([
+        {id: 1, name: 'User 1', email: 'user01@hotmail.com'},
+        {id: 2, name: 'User 2', email: 'user02@hotmail.com'},
+        {id: 3, name: 'User 3', email: 'user03@hotmail.com'}
+      ]);
+    });
+};
+
+
+--------
+
